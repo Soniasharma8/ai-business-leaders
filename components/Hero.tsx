@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { useCountdown } from "@/hooks/useCountdown";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const REG_END = new Date(Date.now() + 10 * 3600000 + 14 * 60000 + 15000);
 
-const COUNTRIES = [
-  { code: "+91", name: "India 🇮🇳" },
-  { code: "+1", name: "USA 🇺🇸" },
-  { code: "+44", name: "UK 🇬🇧" },
-  { code: "+971", name: "UAE 🇦🇪" },
-  { code: "+61", name: "Australia 🇦🇺" },
-];
+// const COUNTRIES = [
+//   { code: "+91", name: "India 🇮🇳" },
+//   { code: "+1", name: "USA 🇺🇸" },
+//   { code: "+44", name: "UK 🇬🇧" },
+//   { code: "+971", name: "UAE 🇦🇪" },
+//   { code: "+61", name: "Australia 🇦🇺" },
+// ];
 
 export default function Hero() {
   const reg = useCountdown(REG_END);
@@ -22,7 +24,7 @@ export default function Hero() {
   const [loading, setLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(COUNTRIES[0]);
+  // const [selected, setSelected] = useState(COUNTRIES[0]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,55 +112,33 @@ export default function Hero() {
                 Reserve Your Spot
               </h2>
 
-              {/* PHONE INPUT */}
-              <div className="relative mb-4">
-                <label htmlFor="phone" className="sr-only">
-                  Phone Number
-                </label>
-
-                <div className="flex border rounded-lg overflow-hidden">
-                  
-                  {/* Country dropdown */}
-                  <button
-                    type="button"
-                    onClick={() => setOpen(!open)}
-                    className="flex items-center gap-1 px-3 border-r text-sm text-gray-700 bg-gray-50"
-                  >
-                    {selected.code} ▾
-                  </button>
-
-                  {/* Input */}
-                  <input
-                    id="phone"
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) =>
-                      setPhone(e.target.value.replace(/\D/g, ""))
-                    }
-                    placeholder="Enter phone number"
-                    className="flex-1 px-3 py-3 text-sm text-black outline-none"
-                  />
-                </div>
-
-                {/* Dropdown list */}
-                {open && (
-                  <div className="absolute top-full left-0 w-44 bg-white border rounded-md mt-1 max-h-40 overflow-y-auto shadow-lg z-50">
-                    {COUNTRIES.map((c) => (
-                      <div
-                        key={c.code}
-                        onClick={() => {
-                          setSelected(c);
-                          setOpen(false);
-                        }}
-                        className="px-3 py-2 text-sm text-black hover:bg-gray-100 cursor-pointer"
-                      >
-                        {c.name} ({c.code})
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+           <div className="mb-4">
+           <label className="sr-only">Phone Number</label>
+         
+           <PhoneInput
+             country={"in"}
+             value={phone}
+             onChange={(value) => setPhone(value)}
+             enableSearch={true}
+             inputStyle={{
+               width: "100%",
+               height: "48px",
+               borderRadius: "8px",
+               border: "1px solid #e5e7eb",
+               paddingLeft: "48px",
+               fontSize: "14px",
+               color: "#000",
+             }}
+             buttonStyle={{
+               borderTopLeftRadius: "8px",
+               borderBottomLeftRadius: "8px",
+               border: "1px solid #e5e7eb",
+             }}
+             containerStyle={{
+               width: "100%",
+             }}
+           />
+       </div>
 
               {/* Checkbox */}
               <div className="flex items-start gap-2 mb-5">
